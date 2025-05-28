@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container">
+    <h1 class="mt-4">Welcome to the Admin Panel</h1>
+    <p class="lead">Manage your metropolis, restaurants, and users efficiently.</p>
+
+    <div class="row mt-4">
+        <!-- Manage Metropolis -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">🌆 Manage Metropolis</h5>
+                    <p class="card-text">View and update city information.</p>
+                    <a asp-action="List" asp-controller="Metropolis" asp-area="Admin" class="btn btn-primary">Go to Metropolis</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Restaurants -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">🍽️ Manage Restaurants</h5>
+                    <p class="card-text">Add, edit, or remove restaurants.</p>
+                    <a asp-action="List" asp-controller="Restaurant" asp-area="Admin" class="btn btn-success">Go to Restaurants</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Users -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">👤 Manage Users</h5>
+                    <p class="card-text">Handle user accounts and roles.</p>
+                    <a asp-action="List" asp-controller="User" asp-area="Admin" class="btn btn-warning">Go to Users</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Website -->
+    <div class="text-center mt-4">
+        <a asp-action="Index" asp-controller="Home" asp-area="" class="btn btn-info">🌍 View Website</a>
+    </div>
+</div>

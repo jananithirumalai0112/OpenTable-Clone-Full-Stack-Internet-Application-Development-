@@ -1,0 +1,78 @@
+@model OpenTableApp.Models.ReservationDetailViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Restaurant Detail";
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+
+<h2 class="mb-3">@Model.Restaurant?.Name</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-warning">@TempData["Error"]</div>
+}
+
+<!-- Restaurant Info -->
+<div class="mb-4">
+    <p><strong>Region:</strong> @Model.Restaurant?.Metropolis?.Name</p>
+    <p><strong>Address:</strong> @Model.Restaurant?.Address</p>
+    <p><strong>Phone:</strong> @Model.Restaurant?.Phone</p>
+    <p><strong>Cuisine:</strong> @Model.Restaurant?.CuisineStyle</p>
+    <p><strong>Price Range:</strong> @Model.Restaurant?.PriceRange</p>
+    <p><strong>Open Hours:</strong> @Model.Restaurant?.OpenHours</p>
+</div>
+
+<!-- Reservation Filter Form (Date Picker) -->
+<form method="get" asp-controller="Details" asp-action="Detail">
+    <input type="hidden" name="id" value="@Model.Restaurant?.Id" />
+    <div class="form-group mb-3">
+        <label for="selectedDate"><strong>Select Date:</strong></label>
+        <input type="date" name="selectedDate" id="selectedDate" value="@Model.ReservationDate.ToString("yyyy-MM-dd")"
+               min="@today" class="form-control" onchange="this.form.submit()" />
+    </div>
+</form>
+
+<!-- Reservation Form -->
+<div class="card bg-light shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Reserve a Table</h5>
+
+        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input type="hidden" name="RestaurantId" value="@Model.Restaurant?.Id" />
+            <input type="hidden" name="Date" value="@Model.ReservationDate.ToString("yyyy-MM-dd")" />
+            <input type="hidden" name="RestaurantName" value="@Model.Restaurant?.Name" />
+            <input type="hidden" name="MetropolisName" value="@Model.Restaurant?.Metropolis?.Name" />
+
+            <div class="form-group mb-3">
+                <label>Number of People</label>
+                <input type="number" name="NumberOfPeople" class="form-control" min="1" required />
+            </div>
+
+            <div class="form-group mb-3">
+                <label>Time Slot</label>
+                @if (Model.AvailableTimeSlots != null && Model.AvailableTimeSlots.Any())
+                {
+                    <select name="Time" class="form-control" required>
+                        <option value="">-- Select a Time --</option>
+                        @foreach (var slot in Model.AvailableTimeSlots)
+                        {
+                            <option value="@slot">@slot</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <div class="alert alert-warning">No available time slots for the selected date.</div>
+                }
+            </div>
+
+            <div class="mt-3">
+                <button type="submit" class="btn btn-success me-2" @(Model.AvailableTimeSlots.Any() ? "" : "disabled")>
+                    <i class="fas fa-cart-plus"></i> Hold Table
+                </button>
+                <a asp-controller="List" asp-action="List" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

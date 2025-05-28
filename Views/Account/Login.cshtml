@@ -1,0 +1,54 @@
+@model OpenTableApp.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form method="post" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl">
+    <div class="row mb-2">
+        <label class="col-form-label col-md-2">Email:</label>
+        <div class="col-md-4">
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <label class="col-form-label col-md-2">Password:</label>
+        <div class="col-md-4">
+            <input asp-for="Password" class="form-control" type="password" />
+        </div>
+        <div class="col">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col offset-md-2">
+            <input asp-for="RememberMe" type="checkbox" /> Remember Me
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col offset-md-2">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col offset-md-2">
+            Not registered? <a asp-action="Register" asp-controller="Account">Register</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

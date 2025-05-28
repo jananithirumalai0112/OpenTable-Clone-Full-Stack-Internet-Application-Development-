@@ -1,0 +1,74 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentController = ViewContext.RouteData.Values["Controller"]?.ToString() ?? "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+
+    <!--  Local Bootstrap and FontAwesome (stored in wwwroot/css & wwwroot/js) -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/fontawesome.min.css" />
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/all.min.js"></script> <!-- Optional, only if you're using icons -->
+
+    <style>
+        .nav-link i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "Home" ? "active" : "")"
+                               asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "Metropolis" ? "active" : "")"
+                               asp-area="Admin" asp-controller="Metropolis" asp-action="List">
+                                <i class="fas fa-city"></i> <span>Manage Metropolis</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "Restaurant" ? "active" : "")"
+                               asp-area="Admin" asp-controller="Restaurant" asp-action="List">
+                                <i class="fas fa-utensils"></i> <span>Manage Restaurants</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "User" ? "active" : "")"
+                               asp-area="Admin" asp-controller="User" asp-action="List">
+                                <i class="fas fa-users"></i> <span>Manage Users</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-eye"></i> <span>View Site</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main id="main-content" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

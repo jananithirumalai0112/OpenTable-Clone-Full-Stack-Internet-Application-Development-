@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Areas\\Admin\\Views",
+    "\\Areas\\Admin\\Views\\Home",
+    "\\Areas\\Admin\\Views\\Shared",
+    "\\Areas\\Main",
+    "\\Areas\\Main\\Controllers",
+    "\\Areas\\Main\\Views",
+    "\\Areas\\Main\\Views\\Home",
+    "\\obj",
+    "\\obj\\Release"
+  ],
+  "SelectedNode": "\\Areas",
+  "PreviewInSolutionExplorer": false
+}

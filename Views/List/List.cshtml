@@ -1,0 +1,89 @@
+@model OpenTableApp.Models.RestaurantFilterViewModel
+
+@{
+    ViewData["Title"] = "Find a Table";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Find a Table</h2>
+
+<form asp-action="List" method="get">
+    <div class="row g-3 align-items-end mb-4">
+        <div class="col-md-4">
+            <label for="MetropolisId">Metropolis</label>
+            <select asp-for="MetropolisId" class="form-control" asp-items="@(new SelectList(Model.Metropolises, "Id", "Name"))">
+                <option value="">All</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="CuisineStyle">Cuisine</label>
+            <select asp-for="CuisineStyle" class="form-control">
+                <option value="">All</option>
+                @foreach (var style in Model.CuisineStyles)
+                {
+                    <option value="@style">@style</option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="PriceRange">Price Range</label>
+            <select asp-for="PriceRange" class="form-control">
+                <option value="">All</option>
+                @foreach (var price in Enum.GetValues(typeof(OpenTableApp.Models.PriceRange)))
+                {
+                    <option value="@price">@price</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-12 d-flex gap-2 mt-2">
+            <button type="submit" class="btn btn-primary w-50">
+                <i class="fas fa-search"></i> Find Table
+            </button>
+            <button type="submit"
+                    formaction="@Url.Action("ClearFilter", "List")"
+                    formmethod="post"
+                    class="btn btn-secondary w-50">
+                <i class="fas fa-times-circle"></i> Clear
+            </button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Restaurants.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cuisine</th>
+                <th>Price</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var r in Model.Restaurants)
+            {
+                <tr>
+                    <td>@r.Name</td>
+                    <td>@r.CuisineStyle</td>
+                    <td>@r.PriceRange</td>
+                    <td>@r.Metropolis?.Name</td>
+                    <td>
+                        <a asp-controller="Details"
+                           asp-action="Detail"
+                           asp-route-id="@r.Id"
+                           class="btn btn-info btn-sm">
+                            <i class="fas fa-info-circle"></i> Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No restaurants found.</p>
+}

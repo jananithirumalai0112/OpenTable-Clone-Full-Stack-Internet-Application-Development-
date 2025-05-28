@@ -1,0 +1,36 @@
+@model OpenTableApp.Models.Restaurant
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Delete Restaurant";
+}
+
+<h2>Delete Restaurant</h2>
+
+<h3>Are you sure you want to delete this restaurant?</h3>
+<div>
+    <h4>Restaurant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+        <dt>Address</dt>
+        <dd>@Model.Address</dd>
+        <dt>Phone</dt>
+        <dd>@Model.Phone</dd>
+        <dt>Open Hours</dt>
+        <dd>@Model.OpenHours</dd>
+        <dt>Price Range</dt>
+        <dd>@Model.PriceRange</dd>
+        <dt>Cuisine Style</dt>
+        <dd>@Model.CuisineStyle</dd>
+        <dt>Metropolis</dt>
+        <dd>@Model.Metropolis?.Name</dd>
+    </dl>
+
+    <form asp-area="Admin" asp-controller="Restaurant" asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" onclick="history.back();">Cancel</button>
+    </form>
+</div>

@@ -1,0 +1,37 @@
+@model IEnumerable<OpenTableApp.Models.Metropolis>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1>Metropolises</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Metropolis</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>State</th>
+            <th>Country</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var metropolis in Model)
+        {
+            <tr>
+                <td>@metropolis.Name</td>
+                <td>@metropolis.State</td>
+                <td>@metropolis.Country</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@metropolis.Id" class="btn btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@metropolis.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

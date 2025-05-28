@@ -1,0 +1,93 @@
+@model IEnumerable<OpenTableApp.Models.Restaurant>
+@using OpenTableApp.Models
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Restaurants List";
+
+    var filters = ViewBag.Filters as RestaurantFilterViewModel;
+    ViewBag.CuisineStyles = new List<string> { "American", "French", "Mediterranean", "Indian", "Chinese", "Japanese", "Italian", "Mexican" };
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-area="Admin" asp-controller="Restaurant" asp-action="Create" class="btn btn-primary">Create New Restaurant</a>
+</p>
+
+<form asp-area="Admin" asp-controller="Restaurant" asp-action="List" method="get" class="d-flex flex-wrap gap-2 mb-3">
+    <div class="form-group">
+        <label for="MetropolisId">Metropolis:</label>
+        <select id="MetropolisId" name="MetropolisId" class="form-control">
+            <option value="">All</option>
+            @foreach (var metropolis in ViewBag.Metropolises)
+            {
+                <option value="@metropolis.Id" selected="@(filters?.MetropolisId == metropolis.Id ? "selected" : null)">
+                    @metropolis.Name
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="PriceRange">Price Range:</label>
+        <select id="PriceRange" name="PriceRange" class="form-control">
+            <option value="">All</option>
+            @foreach (var price in ViewBag.PriceRanges)
+            {
+                <option value="@price" selected="@(filters?.PriceRange?.ToString() == price.ToString() ? "selected" : null)">
+                    @price
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="CuisineStyle">Cuisine Style:</label>
+        <select id="CuisineStyle" name="CuisineStyle" class="form-control">
+            <option value="">All</option>
+            @foreach (var cuisine in ViewBag.CuisineStyles)
+            {
+                <option value="@cuisine" selected="@(filters?.CuisineStyle == cuisine ? "selected" : null)">
+                    @cuisine
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group align-self-end">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-area="Admin" asp-controller="Restaurant" asp-action="List" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Open Hours</th>
+            <th>Cuisine Style</th>
+            <th>Price Range</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var restaurant in Model)
+        {
+            <tr>
+                <td>@restaurant.Name</td>
+                <td>@restaurant.Address</td>
+                <td>@restaurant.Phone</td>
+                <td>@restaurant.OpenHours</td>
+                <td>@restaurant.CuisineStyle</td>
+                <td>@restaurant.PriceRange</td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Restaurant" asp-action="Edit" asp-route-id="@restaurant.Id" class="btn btn-warning btn-sm">Edit</a>
+                    <a asp-area="Admin" asp-controller="Restaurant" asp-action="Delete" asp-route-id="@restaurant.Id" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

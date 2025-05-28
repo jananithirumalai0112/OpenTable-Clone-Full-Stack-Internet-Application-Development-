@@ -1,0 +1,69 @@
+@model OpenTableApp.Models.Restaurant
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Restaurant";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-area="Admin" asp-controller="Restaurant" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" class="form-control" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="OpenHours"></label>
+        <input asp-for="OpenHours" class="form-control" />
+        <span asp-validation-for="OpenHours" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CuisineStyle"></label>
+        <input asp-for="CuisineStyle" class="form-control" />
+        <span asp-validation-for="CuisineStyle" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PriceRange"></label>
+        <select asp-for="PriceRange" class="form-control">
+            @foreach (var priceRange in ViewBag.PriceRanges)
+            {
+                <option value="@priceRange">@priceRange</option>
+            }
+        </select>
+        <span asp-validation-for="PriceRange" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MetropolisId"></label>
+        <select asp-for="MetropolisId" class="form-control">
+            @foreach (var metropolis in ViewBag.Metropolises)
+            {
+                <option value="@metropolis.Id">@metropolis.Name</option>
+            }
+        </select>
+        <span asp-validation-for="MetropolisId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-controller="Restaurant" asp-action="List" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

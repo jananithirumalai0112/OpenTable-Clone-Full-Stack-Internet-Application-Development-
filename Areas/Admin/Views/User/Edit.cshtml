@@ -1,0 +1,61 @@
+@model OpenTableApp.Models.User
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";    
+    ViewData["Title"] = "Edit User";
+}
+
+<h1>Edit User</h1>
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <!-- Role Dropdown -->
+    <div class="form-group">
+        <label asp-for="RoleNames">Role</label>
+        <select asp-for="RoleNames" class="form-control">
+            @if (Model.RoleNames.Contains("Admin"))
+            {
+                <option value="Admin" selected>Admin</option>
+            }
+            else
+            {
+                <option value="Admin">Admin</option>
+            }
+
+            @if (Model.RoleNames.Contains("User"))
+            {
+                <option value="User" selected>User</option>
+            }
+            else
+            {
+                <option value="User">User</option>
+            }
+        </select>
+        <span asp-validation-for="RoleNames" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="List" asp-controller="User" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

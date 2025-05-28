@@ -1,0 +1,66 @@
+@model List<OpenTableApp.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Shopping Cart</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">No Items In the Cart.</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Restaurant</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>People</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.RestaurantName at @item.MetropolisName</td>
+                    <td>@item.Date.ToShortDateString()</td>
+                    <td>@item.Time</td>
+                    <td>@item.NumberOfPeople</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-controller="Reservation" asp-action="ConfirmReservations" method="post">
+            <button type="submit" class="btn btn-success">Confirm Reserve</button>
+        </form>
+    }
+    else
+    {
+        <button class="btn btn-warning" onclick="showReservationPopup()">Confirm Reserve</button>
+    }
+
+    <a asp-controller="List" asp-action="List" class="btn btn-secondary">Back To List</a>
+}
+
+@section Scripts {
+    <script>
+        function showReservationPopup() {
+            alert("Please Register or Login to confirm your reservation. Redirecting to login page.");
+            window.location.href = '@Url.Action("Login", "Account")';
+        }
+    </script>
+}

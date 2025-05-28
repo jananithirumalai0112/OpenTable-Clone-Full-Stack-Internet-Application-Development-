@@ -1,0 +1,16 @@
+@model OpenTableApp.Models.User
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Delete User";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Are you sure you want to delete the user <strong>@Model.FirstName @Model.LastName</strong>?</p>
+
+<form asp-area="Admin" asp-controller="User" asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-area="Admin" asp-controller="User" asp-action="List" class="btn btn-secondary">Cancel</a>
+</form>
